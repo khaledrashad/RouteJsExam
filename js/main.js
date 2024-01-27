@@ -1,3 +1,5 @@
+import { mainData } from "./api.module.js"
+let mainDataUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s="
 let sideBarWidth = ($(".col-10").innerWidth())
 $(".sideBar").css("left",`-${sideBarWidth}px`)
 
@@ -10,5 +12,8 @@ $("#sidebarTabClose").on("click",function(){
         $('.sideBar').animate({left: `0px`},1000);
     }
 })
-console.log($(".sidebarTabClose").html());
 $('.sidebarTabIcons,.sideBarListIcons,.sidebarTabClose').css("cursor","pointer")
+
+mainData(mainDataUrl).then(data=>{
+    console.log(data)
+})
