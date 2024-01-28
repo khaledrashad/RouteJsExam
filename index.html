@@ -11,14 +11,14 @@
 <body class="bg-black">
     <div class="sideBar">
         <div class="row">
-            <div class="col-8">
+            <div class="col-8 bg-black">
                 <div class="row">
                     <div class="col-10">
                         <div class="sideBarList d-flex flex-column justify-content-between p-5">
                             <div class="sideBarListTop ">
                                 <ul class="text-white">
-                                    <li class="py-1"><a href="" class="text-decoration-none text-white">Search</a></li>
-                                    <li class="py-1"><a href="" class="text-decoration-none text-white">Categories</a></li>
+                                    <li class="py-1"><a href="" class="text-decoration-none text-white"id="searchlist">Search</a></li>
+                                    <li class="py-1"><a href="" class="text-decoration-none text-white" id="catList">Categories</a></li>
                                     <li class="py-1"><a href="" class="text-decoration-none text-white">Area</a></li>
                                     <li class="py-1"><a href="" class="text-decoration-none text-white">Ingredients</a></li>
                                     <li class="py-1"><a href="" class="text-decoration-none text-white">Contact Us</a></li>
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 pe-0">
                         <div class="sidebarTab bg-white d-flex flex-column justify-content-between text-center py-3">
                             <img src="images/examLogo.png" class="w-100" alt="">
                             <div class="sidebarTabClose">
@@ -51,6 +51,25 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="recipesMenu">
+        <div class="container">
+            <div class="row" id="recipesDisplay"></div>
+        </div>
+    </div>
+    <div class="searchPage">
+        <div class="container">
+            <div class="searchInputs d-flex py-3">
+                <input type="text" class="form-control mx-2" placeholder="Enter Meal Name" id="mealNameInput">
+                <input type="text" class="form-control mx-2" placeholder="Enter First Letter Of The Meal"id="MealLetterInput" maxlength="1">
+            </div>
+            <div class="searchDisplay row"></div>
+        </div>
+    </div>
+    <div class="catPage">
+        <div class="container">
+            <div class="row" id="catDisplay"></div>
         </div>
     </div>
     <script src="js/bootstrap.bundle.min.js"></script>
