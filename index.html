@@ -20,8 +20,8 @@
                                     <li class="py-1"><a href="" class="text-decoration-none text-white"id="searchlist">Search</a></li>
                                     <li class="py-1"><a href="" class="text-decoration-none text-white" id="catList">Categories</a></li>
                                     <li class="py-1"><a href="" class="text-decoration-none text-white" id="areaList">Area</a></li>
-                                    <li class="py-1"><a href="" class="text-decoration-none text-white">Ingredients</a></li>
-                                    <li class="py-1"><a href="" class="text-decoration-none text-white">Contact Us</a></li>
+                                    <li class="py-1"><a href="" class="text-decoration-none text-white" id="ingList">Ingredients</a></li>
+                                    <li class="py-1"><a href="" class="text-decoration-none text-white" id="contactUs">Contact Us</a></li>
                                 </ul>
                             </div>
                             <div class="sideBarListBot">
@@ -77,6 +77,48 @@
             <div class="row" id="areaDisplay"></div>
         </div>
     </div>
+    <div class="ingPage">
+        <div class="container">
+            <div class="row" id="ingDisplay"></div>
+        </div>
+    </div>
+    <form class="contactPage">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row my-3">
+                        <div class="col-6">
+                            <input type="text" class="form-control" placeholder="Enter Your Name" id="formName">
+                        </div>
+                        <div class="col-6">
+                            <input type="email" class="form-control" placeholder="Enter Your Email" id="formEmail">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row my-3">
+                        <div class="col-6">
+                            <input type="text" class="form-control" placeholder="Enter Your Phone" id="formPhone">
+                        </div>
+                        <div class="col-6">
+                            <input type="number" class="form-control" placeholder="Enter Your Age" id="formAge">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 my-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="password" class="form-control" placeholder="Enter Your password" id="formPassword">
+                        </div>
+                        <div class="col-6">
+                            <input type="password" class="form-control" placeholder="Repassword" id="formRepassword">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-danger" disabled>Submit</button>
+            </div>
+        </div>
+    </form>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-3.7.1.min.js"></script>
     <script type="module" src="js/main.js"></script>
