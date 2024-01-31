@@ -41,8 +41,12 @@
 }
 
 .contactPage {
-  display: flex;
+  display: none;
   height: 100vh;
   justify-content: center;
   align-items: center;
+}
+
+.selectedMealTag {
+  width: fit-content;
 }

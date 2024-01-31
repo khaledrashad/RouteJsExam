@@ -19,10 +19,11 @@ mainData(mainDataUrl).then(data => {
     const meals = data.meals
     let displayedFood = ""
     meals.forEach(meal => {
-        let { strMeal, strMealThumb } = meal
+
+        let { strMeal, strMealThumb, idMeal } = meal
         let temp = `          
         <div class="col-md-3 g-4">
-            <div class="mealCard position-relative overflow-hidden rounded-2">
+            <div class="mealCard position-relative overflow-hidden rounded-2" id='${idMeal}'>
                 <img src="${strMealThumb}" class="w-100">
                 <div class="cardLayer d-flex position-absolute">
                     <h3 class="align-self-center">${strMeal}</h3>
@@ -32,6 +33,43 @@ mainData(mainDataUrl).then(data => {
         displayedFood += temp
     });
     $("#recipesDisplay").html(`${displayedFood}`)
+}).then(()=>{
+    $(".mealCard").on("click", function () {
+        let mealId = ($(this).attr("id"));
+        console.log(mealId);
+        mainData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`).then(data => {
+            let selectedMeal = data.meals[0]
+            let { strCategory, strMeal, strArea, strInstructions, strMealThumb, strTags, strYoutube, strSource } = selectedMeal
+            let chosenMeal = `
+            <div class="container">
+                <div class="selectedMeal py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <img src="${strMealThumb}" alt="" class="w-100">
+                                <h2 class="text-white">${strMeal}</h2>
+                            </div>
+                            <div class="col-8">
+                                <h2 class="text-white">instructions:</h2>
+                                <p class="text-white">${strInstructions}</p>
+                                <h3 class="text-white">area: ${strArea}</h3>
+                                <h3 class="text-white">category: ${strCategory}</h3>
+                                <h3 class="text-white mb-2">tags:
+                                    <div class="selectedMealTag my-2">
+                                        <h5 class="bg-info py-2 px-1 rounded-2">${strTags}</h5>
+                                    </div>
+                                 </h3>
+                                <button class="btn btn-success"><a href="${strYoutube}" target="_blank" class="text-decoration-none text-white">Video</a></button>
+                                <button class="btn btn-danger"><a href="${strSource}" target="_blank" class="text-decoration-none text-white">Source</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             `
+            $("#recipesDisplay").html(`${chosenMeal}`)
+        })
+    })
 })
 $("#searchlist").on("click", e => {
     e.preventDefault();
@@ -63,11 +101,9 @@ $("#mealNameInput").on("keyup", e => {
     }).then(() => {
         $(".mealCard").on("click", function () {
             let mealId = ($(this).attr("id"));
-            console.log(mealId);
             mainData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`).then(data => {
                 let selectedMeal = data.meals[0]
-                console.log(selectedMeal);
-                let { strCategory, strMeal, strArea, strInstructions, strMealThumb} = selectedMeal
+                let { strCategory, strMeal, strArea, strInstructions, strMealThumb, strTags, strYoutube, strSource } = selectedMeal
                 let chosenMeal = `
                 <div class="container">
                     <div class="selectedMeal py-5">
@@ -82,6 +118,13 @@ $("#mealNameInput").on("keyup", e => {
                                     <p class="text-white">${strInstructions}</p>
                                     <h3 class="text-white">area: ${strArea}</h3>
                                     <h3 class="text-white">category: ${strCategory}</h3>
+                                    <h3 class="text-white mb-2">tags:
+                                        <div class="selectedMealTag my-2">
+                                            <h5 class="bg-info py-2 px-1 rounded-2">${strTags}</h5>
+                                        </div>
+                                     </h3>
+                                    <button class="btn btn-success"><a href="${strYoutube}" target="_blank" class="text-decoration-none text-white">Video</a></button>
+                                    <button class="btn btn-danger"><a href="${strSource}" target="_blank" class="text-decoration-none text-white">Source</a></button>
                                 </div>
                             </div>
                         </div>
@@ -98,10 +141,11 @@ $("#MealLetterInput").on("keyup", e => {
         const meals = data.meals
         let displayedFood = ""
         meals.forEach(meal => {
-            let { strMeal, strMealThumb } = meal
+            console.log(meal);
+            let { strMeal, strMealThumb, idMeal } = meal
             let temp = `          
             <div class="col-md-3 g-4">
-                <div class="mealCard position-relative overflow-hidden rounded-2">
+                <div class="mealCard position-relative overflow-hidden rounded-2" id="${idMeal}">
                     <img src="${strMealThumb}" class="w-100">
                     <div class="cardLayer d-flex position-absolute">
                         <h3 class="align-self-center">${strMeal}</h3>
@@ -111,6 +155,43 @@ $("#MealLetterInput").on("keyup", e => {
             displayedFood += temp
         });
         $(".searchDisplay").html(`${displayedFood}`)
+    }).then(()=>{
+        $(".mealCard").on("click", function () {
+            let mealId = ($(this).attr("id"));
+            console.log(mealId);
+            mainData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`).then(data => {
+                let selectedMeal = data.meals[0]
+                let { strCategory, strMeal, strArea, strInstructions, strMealThumb, strTags, strYoutube, strSource } = selectedMeal
+                let chosenMeal = `
+                <div class="container">
+                    <div class="selectedMeal py-5">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img src="${strMealThumb}" alt="" class="w-100">
+                                    <h2 class="text-white">${strMeal}</h2>
+                                </div>
+                                <div class="col-8">
+                                    <h2 class="text-white">instructions:</h2>
+                                    <p class="text-white">${strInstructions}</p>
+                                    <h3 class="text-white">area: ${strArea}</h3>
+                                    <h3 class="text-white">category: ${strCategory}</h3>
+                                    <h3 class="text-white mb-2">tags:
+                                        <div class="selectedMealTag my-2">
+                                            <h5 class="bg-info py-2 px-1 rounded-2">${strTags}</h5>
+                                        </div>
+                                     </h3>
+                                    <button class="btn btn-success"><a href="${strYoutube}" target="_blank" class="text-decoration-none text-white">Video</a></button>
+                                    <button class="btn btn-danger"><a href="${strSource}" target="_blank" class="text-decoration-none text-white">Source</a></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 `
+                $(".searchPage").html(`${chosenMeal}`)
+            })
+        })
     })
 })
 $("#catList").on("click", e => {
@@ -147,10 +228,10 @@ $("#catList").on("click", e => {
                 const meals = data.meals
                 let displayedFood = ""
                 meals.forEach(meal => {
-                    let { strMeal, strMealThumb } = meal
+                    let { strMeal, strMealThumb, idMeal } = meal
                     let temp = `          
                     <div class="col-md-3 g-4">
-                        <div class="mealCard position-relative overflow-hidden rounded-2">
+                        <div class="mealCard position-relative overflow-hidden rounded-2" id="${idMeal}">
                             <img src="${strMealThumb}" class="w-100">
                             <div class="cardLayer d-flex position-absolute">
                                 <h3 class="align-self-center">${strMeal}</h3>
@@ -275,6 +356,6 @@ $("#contactUs").on("click", e => {
     $(".catPage").css({ display: "none" })
     $(".areaPage").css({ display: "none" })
     $(".ingPage").css({ display: "none" })
-    $(".contactPage").css({ display: "block" })
+    $(".contactPage").css({ display: "flex" })
 })
 
