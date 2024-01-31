@@ -18,9 +18,11 @@
   min-height: 100vh;
 }
 
-.mealCard:hover .cardLayer{
+.mealCard:hover .cardLayer, .catCard:hover .cardLayer{
   top: 0;
 }
+
+
 
 .cardLayer {
   position: absolute;

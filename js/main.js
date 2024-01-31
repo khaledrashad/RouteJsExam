@@ -1,5 +1,5 @@
 import { mainData } from "./api.module.js"
-import { nameRgx, ageRgx, passRgx, numRgx } from "./rgx.module.js"
+import { nameRgx, ageRgx, passRgx, numRgx, emailRgx } from "./rgx.module.js"
 let mainDataUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s="
 let sideBarWidth = ($(".col-10").innerWidth())
 $(".sideBar").css("left", `-${sideBarWidth}px`)
@@ -33,7 +33,7 @@ mainData(mainDataUrl).then(data => {
         displayedFood += temp
     });
     $("#recipesDisplay").html(`${displayedFood}`)
-}).then(()=>{
+}).then(() => {
     $(".mealCard").on("click", function () {
         let mealId = ($(this).attr("id"));
         console.log(mealId);
@@ -155,7 +155,7 @@ $("#MealLetterInput").on("keyup", e => {
             displayedFood += temp
         });
         $(".searchDisplay").html(`${displayedFood}`)
-    }).then(()=>{
+    }).then(() => {
         $(".mealCard").on("click", function () {
             let mealId = ($(this).attr("id"));
             console.log(mealId);
@@ -206,10 +206,10 @@ $("#catList").on("click", e => {
         const categories = data.categories
         let displayedCat = ""
         categories.forEach(category => {
-            let { idCategory, strCategoryThumb, strCategory, strCategoryDescription } = category
+            let { strCategoryThumb, strCategory, strCategoryDescription } = category
             let temp = `          
             <div class="col-md-3 g-4">
-                <div class="mealCard position-relative overflow-hidden rounded-2" id='${strCategory}'>
+                <div class="catCard position-relative overflow-hidden rounded-2" id='${strCategory}'>
                     <img src="${strCategoryThumb}" class="w-100">
                     <div class="cardLayer position-absolute justify-content-center text-center">
                         <h3 class="text-white">${strCategory}</h3>
@@ -221,7 +221,7 @@ $("#catList").on("click", e => {
         });
         $("#catDisplay").html(`${displayedCat}`)
     }).then(() => {
-        $('.mealCard').on('click', function () {
+        $('.catCard').on('click', function () {
             let catId = ($(this).attr("id"));
             mainData(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${catId}`).then(data => {
                 console.log(data);
@@ -241,7 +241,46 @@ $("#catList").on("click", e => {
                     displayedFood += temp
                 });
                 $("#catDisplay").html(`${displayedFood}`)
+            }).then(() => {
+                $(".mealCard").on("click", function () {
+                    console.log("hello");
+                    let mealId = ($(this).attr("id"));
+                    console.log(mealId);
+                    mainData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`).then(data => {
+                        let selectedMeal = data.meals[0]
+                        let { strCategory, strMeal, strArea, strInstructions, strMealThumb, strTags, strYoutube, strSource } = selectedMeal
+                        let chosenMeal = `
+                        <div class="container">
+                            <div class="selectedMeal py-5">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="${strMealThumb}" alt="" class="w-100">
+                                            <h2 class="text-white">${strMeal}</h2>
+                                        </div>
+                                        <div class="col-8">
+                                            <h2 class="text-white">instructions:</h2>
+                                            <p class="text-white">${strInstructions}</p>
+                                            <h3 class="text-white">area: ${strArea}</h3>
+                                            <h3 class="text-white">category: ${strCategory}</h3>
+                                            <h3 class="text-white mb-2">tags:
+                                                <div class="selectedMealTag my-2">
+                                                    <h5 class="bg-info py-2 px-1 rounded-2">${strTags}</h5>
+                                                </div>
+                                             </h3>
+                                            <button class="btn btn-success"><a href="${strYoutube}" target="_blank" class="text-decoration-none text-white">Video</a></button>
+                                            <button class="btn btn-danger"><a href="${strSource}" target="_blank" class="text-decoration-none text-white">Source</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         `
+                        $("#catDisplay").html(`${chosenMeal}`)
+                    })
+                })
             })
+
         })
     })
 })
@@ -280,10 +319,10 @@ $("#areaList").on("click", e => {
                 const meals = data.meals
                 let displayedFood = ""
                 meals.forEach(meal => {
-                    let { strMeal, strMealThumb } = meal
+                    let { strMeal, strMealThumb, idMeal } = meal
                     let temp = `          
                     <div class="col-md-3 g-4">
-                        <div class="mealCard position-relative overflow-hidden rounded-2">
+                        <div class="mealCard position-relative overflow-hidden rounded-2" id="${idMeal}">
                             <img src="${strMealThumb}" class="w-100">
                             <div class="cardLayer d-flex position-absolute">
                                 <h3 class="align-self-center">${strMeal}</h3>
@@ -293,7 +332,46 @@ $("#areaList").on("click", e => {
                     displayedFood += temp
                 });
                 $("#areaDisplay").html(`${displayedFood}`)
+            }).then(() => {
+                $(".mealCard").on("click", function () {
+                    console.log("hello");
+                    let mealId = ($(this).attr("id"));
+                    console.log(mealId);
+                    mainData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`).then(data => {
+                        let selectedMeal = data.meals[0]
+                        let { strCategory, strMeal, strArea, strInstructions, strMealThumb, strTags, strYoutube, strSource } = selectedMeal
+                        let chosenMeal = `
+                        <div class="container">
+                            <div class="selectedMeal py-5">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="${strMealThumb}" alt="" class="w-100">
+                                            <h2 class="text-white">${strMeal}</h2>
+                                        </div>
+                                        <div class="col-8">
+                                            <h2 class="text-white">instructions:</h2>
+                                            <p class="text-white">${strInstructions}</p>
+                                            <h3 class="text-white">area: ${strArea}</h3>
+                                            <h3 class="text-white">category: ${strCategory}</h3>
+                                            <h3 class="text-white mb-2">tags:
+                                                <div class="selectedMealTag my-2">
+                                                    <h5 class="bg-info py-2 px-1 rounded-2">${strTags}</h5>
+                                                </div>
+                                             </h3>
+                                            <button class="btn btn-success"><a href="${strYoutube}" target="_blank" class="text-decoration-none text-white">Video</a></button>
+                                            <button class="btn btn-danger"><a href="${strSource}" target="_blank" class="text-decoration-none text-white">Source</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         `
+                        $("#areaDisplay").html(`${chosenMeal}`)
+                    })
+                })
             })
+
         })
     })
 })
@@ -332,10 +410,10 @@ $("#ingList").on("click", e => {
                 const meals = data.meals
                 let displayedFood = ""
                 meals.forEach(meal => {
-                    let { strMeal, strMealThumb } = meal
+                    let { strMeal, strMealThumb, idMeal } = meal
                     let temp = `          
                     <div class="col-md-3 g-4">
-                        <div class="mealCard position-relative overflow-hidden rounded-2">
+                        <div class="mealCard position-relative overflow-hidden rounded-2" id="${idMeal}">
                             <img src="${strMealThumb}" class="w-100">
                             <div class="cardLayer d-flex position-absolute">
                                 <h3 class="align-self-center">${strMeal}</h3>
@@ -345,11 +423,50 @@ $("#ingList").on("click", e => {
                     displayedFood += temp
                 });
                 $("#ingDisplay").html(`${displayedFood}`)
+            }).then(() => {
+                $(".mealCard").on("click", function () {
+                    console.log("hello");
+                    let mealId = ($(this).attr("id"));
+                    console.log(mealId);
+                    mainData(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`).then(data => {
+                        let selectedMeal = data.meals[0]
+                        let { strCategory, strMeal, strArea, strInstructions, strMealThumb, strTags, strYoutube, strSource } = selectedMeal
+                        let chosenMeal = `
+                        <div class="container">
+                            <div class="selectedMeal py-5">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <img src="${strMealThumb}" alt="" class="w-100">
+                                            <h2 class="text-white">${strMeal}</h2>
+                                        </div>
+                                        <div class="col-8">
+                                            <h2 class="text-white">instructions:</h2>
+                                            <p class="text-white">${strInstructions}</p>
+                                            <h3 class="text-white">area: ${strArea}</h3>
+                                            <h3 class="text-white">category: ${strCategory}</h3>
+                                            <h3 class="text-white mb-2">tags:
+                                                <div class="selectedMealTag my-2">
+                                                    <h5 class="bg-info py-2 px-1 rounded-2">${strTags}</h5>
+                                                </div>
+                                             </h3>
+                                            <button class="btn btn-success"><a href="${strYoutube}" target="_blank" class="text-decoration-none text-white">Video</a></button>
+                                            <button class="btn btn-danger"><a href="${strSource}" target="_blank" class="text-decoration-none text-white">Source</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         `
+                        $("#ingDisplay").html(`${chosenMeal}`)
+                    })
+                })
             })
         })
     })
 })
 $("#contactUs").on("click", e => {
+    let password = 0
     e.preventDefault()
     $(".recipesMenu").css({ display: "none" })
     $(".searchPage").css({ display: "none" })
@@ -357,5 +474,76 @@ $("#contactUs").on("click", e => {
     $(".areaPage").css({ display: "none" })
     $(".ingPage").css({ display: "none" })
     $(".contactPage").css({ display: "flex" })
+    $('#formName').on("change", e => {
+        let name = e.target.value
+    if (nameRgx.test(name) == true) {
+            console.log("yes");
+            $("#formName").addClass("is-valid")
+            $("#formName").removeClass("is-invalid")
+            return true
+        } else {
+            $("#formName").addClass("is-invalid")
+            $("#formName").removeClass("is-valid")
+        }
+    })
+    $('#formEmail').on("change", e => {
+        let email = e.target.value
+        if (emailRgx.test(email) == true) {
+            console.log("yes");
+            $("#formEmail").addClass("is-valid")
+            $("#formEmail").removeClass("is-invalid")
+        } else {
+            $("#formEmail").addClass("is-invalid")
+            $("#formEmail").removeClass("is-valid")
+        }
+    })
+    $('#formPhone').on("change", e => {
+        let num = e.target.value
+        if (numRgx.test(num) == true) {
+            console.log("yes");
+            $("#formPhone").addClass("is-valid")
+            $("#formPhone").removeClass("is-invalid")
+        } else {
+            $("#formPhone").addClass("is-invalid")
+            $("#formPhone").removeClass("is-valid")
+        }
+    })
+    $('#formAge').on("change", e => {
+        let age = e.target.value
+        if (ageRgx.test(age) == true) {
+            console.log("yes");
+            $("#formAge").addClass("is-valid")
+            $("#formAge").removeClass("is-invalid")
+        } else {
+            $("#formAge").addClass("is-invalid")
+            $("#formAge").removeClass("is-valid")
+        }
+    })
+    $('#formPassword').on("change", e => {
+        let pass = e.target.value
+        if (passRgx.test(pass) == true) {
+            password = pass
+            console.log("yes");
+            $("#formPassword").addClass("is-valid")
+            $("#formPassword").removeClass("is-invalid")
+        } else {
+            $("#formPassword").addClass("is-invalid")
+            $("#formPassword").removeClass("is-valid")
+        }
+    })
+    $('#formRepassword').on("change", e => {
+        let rePass = e.target.value
+        if (rePass == password) {
+            console.log("yes");
+            $("#formRepassword").addClass("is-valid")
+            $("#formRepassword").removeClass("is-invalid")
+        } else {
+            $("#formRepassword").addClass("is-invalid")
+            $("#formRepassword").removeClass("is-valid")
+        }
+    })
+    if ($('#formName').hasClass("is-valid") && $('#formEmail').hasClass("is-valid") && $('#formPhone').hasClass("is-valid") && $('#formAge').hasClass("is-valid") && $('#formPassword').hasClass("is-valid") && $('#formRepassword').hasClass("is-valid")){
+        $("#formBtn").removeAttr("disabled")
+    }
 })
 
